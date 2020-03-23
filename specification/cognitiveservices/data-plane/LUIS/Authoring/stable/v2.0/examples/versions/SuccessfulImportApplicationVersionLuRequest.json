@@ -1,0 +1,17 @@
+{
+  "parameters": {
+    "Endpoint": "{Endpoint}",
+    "Ocp-Apim-Subscription-Key": "00000000000000000000000000000000",
+    "appId": "bd72e8d7-62b8-48f5-9dcb-e3b0588b803a",
+    "versionId": "0.2",
+    "luisApp": "\n> LUIS application information\n> !# @app.name = LuisBot\n> !# @app.versionId = 0.1\n> !# @app.culture = en-us\n> !# @app.luis_schema_version = 3.0.0\n\n\n> # Intent definitions\n\n> !# @intent.inherits = name : HomeAutomation.TurnOff; domain_name : HomeAutomation; model_name : TurnOff\n\n## HomeAutomation.TurnOff\n\n\n## dateintent\n- tomorrow\n- next monday\n- next year\n- 01/7\n\n\n## Help\n- i need help\n- help me\n- what can i do?\n- what are the available options?\n- this is [a test] {@patternAny1:role1}\n\n\n## None\n\n\n## SearchHotels\n- search for hotels in seattle\n- look for hotels in miami\n- show me hotels in california\n- best hotels in seattle\n- hotels in los angeles\n- can you show me hotels from los angeles?\n- find hotels near {@AirportCode=eze}\n- where can i stay near {@AirportCode=nnn}?\n- show hotels near {@AirportCode=att} airport\n- find hotels near {@AirportCode=agl}\n- find hotels around {@AirportCode=eze} airport\n\n\n## ShowHotelsReviews\n- show me the reviews of {@Hotel=the amazing bot resort}\n- can i see the reviews of {@Hotel=extended bot hotel}?\n- find reviews of {@Hotel=hotelxya}\n- show me reviews of {@Hotel=the amazing hotel}\n- can you show me the reviews of {@Hotel=the amazing resort & hotel}\n- what are the reviews of {@Hotel=the hotel bot framework}?\n\n\n> # Entity definitions\n\n@ ml AirportCode hasRole destination\n\n@ ml Hotel\n\n\n> # PREBUILT Entity definitions\n\n@ prebuilt datetimeV2 hasRole datetime role\n\n\n> # Phrase list definitions\n\n@ phraselist Near(interchangeable) = \n\t- near,around,close,nearby\n\n@ phraselist Show(interchangeable) = \n\t- show,find,look,search\n\n\n> # List entities\n\n> # RegEx entities\n\n@ regex regex1 hasRole regex role = /[^a]+/\n\n"
+  },
+  "responses": {
+    "201": {
+      "headers": {
+        "Location": "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/bd72e8d7-62b8-48f5-9dcb-e3b0588b803a/versions/0.2"
+      },
+      "body": "0.2"
+    }
+  }
+}

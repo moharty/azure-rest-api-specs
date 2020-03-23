@@ -2499,6 +2499,108 @@
         }
       }
     },
+    "x-ms-paths": {
+      "/apps/import?text": {
+        "post": {
+          "description": "Imports an application to LUIS, the application's LU should be included in in the request body.",
+          "operationId": "Apps_ImportLu",
+          "parameters": [
+            {
+              "name": "appName",
+              "in": "query",
+              "description": "The application name to create. If not specified, the application name will be read from the imported object. If the application name already exists, an error is returned.",
+              "type": "string"
+            },
+            {
+              "name": "luisApp",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/LuisLuApp"
+              },
+              "description": "An LU representing the LUIS application structure."
+            }
+          ],
+          "consumes": [
+            "text/plain"
+          ],
+          "responses": {
+            "201": {
+              "description": "The ID of the imported application.",
+              "x-nullable": false,
+              "schema": {
+                "$ref": "#/definitions/GuidResponse"
+              }
+            },
+            "default": {
+              "description": "Error Response.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "x-ms-examples": {
+            "Successful Import Application": {
+              "$ref": "./examples/apps/SuccessfulImportApplicationLuRequest.json"
+            }
+          }
+        }
+      },
+      "/apps/{appId}/versions/import?text": {
+        "post": {
+          "description": "Imports a new version into a LUIS application.",
+          "operationId": "Versions_Import",
+          "parameters": [
+            {
+              "$ref": "#/parameters/AppIdInPath"
+            },
+            {
+              "name": "versionId",
+              "in": "query",
+              "description": "The new versionId to import. If not specified, the versionId will be read from the imported object.",
+              "type": "string"
+            },
+            {
+              "name": "luisApp",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/LuisLuApp"
+              },
+              "description": "A LUIS application LU structure."
+            }
+          ],
+          "consumes": [
+            "text/plain"
+          ],
+          "responses": {
+            "201": {
+              "description": "The created application version.",
+              "schema": {
+                "$ref": "#/definitions/VersionResponse"
+              }
+            },
+            "default": {
+              "description": "Error Response.",
+              "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "x-ms-examples": {
+            "Successful Import Application": {
+              "$ref": "./examples/versions/SuccessfulImportApplicationVersionLuRequest.json"
+            }
+          }
+        }
+      }
+    },
     "/apps/assistants": {
       "get": {
         "description": "Gets the endpoint URLs for the prebuilt Cortana applications.",
@@ -3023,6 +3125,9 @@
           },
           {
             "$ref": "#/parameters/VersionIdInPath"
+          },
+          {
+            "$ref": "#/parameters/ExportFormat"
           }
         ],
         "responses": {
@@ -3040,11 +3145,15 @@
           }
         },
         "produces": [
-          "application/json"
+          "application/json",
+          "text/plain"
         ],
         "x-ms-examples": {
           "Successful Export Application Version": {
             "$ref": "./examples/versions/SuccessfulExportApplicationVersionRequest.json"
+          },
+          "Successful Export Lu Application Version": {
+            "$ref": "./examples/versions/SuccessfulExportApplicationVersionLuRequest.json"
           }
         }
       }
@@ -8608,6 +8717,11 @@
         }
       }
     },
+    "LuisLuApp": {
+      "description": "Exported Model (LU) - An exported LUIS Application in LU format.",
+      "additionalProperties": true,
+      "type": "string"
+    },
     "GuidResponse": {
       "description": "The ID (GUID) returned by an operation.",
       "type": "string",
@@ -10229,6 +10343,20 @@
       "type": "string",
       "in": "path",
       "x-ms-skip-url-encoding": true
+    },
+    "ExportFormat": {
+      "name": "format",
+      "in": "query",
+      "description": "Format to use when exporting a LUIS application.",
+      "required": false,
+      "type": "string",
+      "enum": [
+        "json",
+        "lu"
+      ],
+      "x-ms-enum": [
+        "ExportFormat"
+      ]
     }
   }
 }
